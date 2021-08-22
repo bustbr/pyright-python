@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - ci/github
     paths-ignore:
       - "*.md"
       - ".vscode/**"
@@ -19,14 +20,13 @@ on:
 jobs:
   test:
     name: test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       # TODO: test more python versions
       max-parallel: 2
       matrix:
+        os: [ubuntu-latest, windows-latest]
         include:
-        - python-version: 3.6
-          tox-env: py36
         - python-version: 3.9
           tox-env: py39
 
